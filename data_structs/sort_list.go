@@ -11,77 +11,92 @@ type IntSortList struct {
 	length int
 }
 
-func (sl *IntSortList) GetList() [15]int {
-	return sl.list
+// 检查线性表是否为空
+func (isl *IntSortList) ListEmpty() bool {
+	return 0 == isl.length
+}
+
+// 获取线性表
+func (isl *IntSortList) GetList() [15]int {
+	return isl.list
 }
 
 // 获取线性表长度
-func (sl *IntSortList) GetLength() int {
-	return sl.length
+func (isl *IntSortList) GetLength() int {
+	return isl.length
 }
 
 // 获取指定位置的元素
-func (sl *IntSortList) GetElem(index int) (int, error) {
-	if sl.length <= 0 {
+func (isl *IntSortList) GetElem(index int) (int, error) {
+	if isl.length <= 0 {
 		return -1, nil
 	}
 
-	if index < 0 || index > sl.length {
+	if index < 0 || index > isl.length {
 		return -1, errors.New("错误的索引位置")
 	}
 
-	return sl.list[index-1], nil
+	return isl.list[index-1], nil
+}
+
+// 查找元素
+func (isl *IntSortList) FindElem(value int) (int, error) {
+	for index, elem := range isl.list {
+		if elem == value {
+			return index, nil
+		}
+	}
+
+	return 0, errors.New("没有找到元素")
 }
 
 // 获取指定位置元素的内存地址
-func (sl *IntSortList) GetElemPoint(index int) (string, error) {
-	if sl.length <= 0 {
+func (isl *IntSortList) GetElemPoint(index int) (string, error) {
+	if isl.length <= 0 {
 		return "", nil
 	}
 
-	if index < 0 || index > sl.length {
+	if index < 0 || index > isl.length {
 		return "", errors.New("错误的索引位置")
 	}
 
-	return fmt.Sprintf("%p", &sl.list[index-1]), nil
+	return fmt.Sprintf("%p", &isl.list[index-1]), nil
 }
 
 // 插入元素到指定索引位置
-func (sl *IntSortList) InsertToIndex(index int, elem int) (err error) {
-	if index < 1 || index-1 > sl.length {
-		return errors.New("错误的索引位置")
+func (isl *IntSortList) InsertToIndex(position int, elem int) (err error) {
+	if position < 1 || position-1 > isl.length {
+		return errors.New("错误的位置")
 	}
 
-	if sl.length >= len(sl.list) {
+	if isl.length >= len(isl.list) {
 		return errors.New("表已满")
 	}
 
-	for ; index <= sl.length; index++ {
-		ce := sl.list[index-1]
-		sl.list[index-1] = elem
-		elem = ce
+	for i := isl.length; i >= position; i-- {
+		isl.list[i] = isl.list[i-1]
 	}
 
-	sl.list[index-1] = elem
-	sl.length += 1
+	isl.list[position-1] = elem
+	isl.length++
 	return
 }
 
 // 删除指定索引位置的元素
-func (sl *IntSortList) DeleteFromIndex(index int) (err error) {
-	if index < 0 || index > sl.length {
+func (isl *IntSortList) DeleteFromIndex(index int) (err error) {
+	if index < 0 || index > isl.length {
 		return errors.New("错误的索引位置")
 	}
 
-	if sl.length <= 0 {
+	if isl.length <= 0 {
 		return errors.New("表内没有元素")
 	}
 
-	for ; index < sl.length; index++ {
-		sl.list[index-1] = sl.list[index]
+	for ; index < isl.length; index++ {
+		isl.list[index-1] = isl.list[index]
 	}
 
-	sl.list[index-1] = 0
-	sl.length--
+	isl.list[index-1] = 0
+	isl.length--
 	return
 }
