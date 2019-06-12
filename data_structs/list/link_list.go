@@ -1,4 +1,4 @@
-package data_structs
+package list
 
 import (
 	"errors"

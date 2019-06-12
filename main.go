@@ -2,21 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/Luna-CY/go-learn/data_structs"
-	"log"
+	"github.com/Luna-CY/go-learn/algorithm"
 )
 
 func main() {
-	str := "1 2 # 3 # # 4 # #"
+	bst := algorithm.BSTree{}
 
-	tree := &data_structs.BTreeNode{}
-	err := data_structs.CreateNewBTree(tree, str)
+	bst.Insert(124)
+	bst.Insert(123)
+	bst.Insert(80)
+	bst.Insert(30)
+	bst.Insert(60)
+	bst.Insert(100)
+	bst.Insert(120)
+	bst.Insert(150)
+	bst.Insert(130)
 
-	if nil != err {
-		log.Fatalln(err)
-	}
-
-	fmt.Println(tree.PreOrderTraverse())
-	fmt.Println(tree.InOrderTraverse())
-	fmt.Println(tree.PostOrderTraverse())
+	fmt.Println(bst.PreOrderTraverse())
+	fmt.Println(bst.InOrderTraverse())
 }
