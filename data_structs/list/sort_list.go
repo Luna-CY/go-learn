@@ -7,8 +7,17 @@ import (
 
 // 线性表（顺序存储）
 type IntSortList struct {
-	list   [15]int
+	list   []int
 	length int
+}
+
+func (isl *IntSortList) Init(items ...int) {
+	isl.length = len(items)
+	isl.list = make([]int, isl.length)
+
+	for index, item := range items {
+		isl.list[index] = item
+	}
 }
 
 // 检查线性表是否为空
@@ -17,7 +26,7 @@ func (isl *IntSortList) ListEmpty() bool {
 }
 
 // 获取线性表
-func (isl *IntSortList) GetList() [15]int {
+func (isl *IntSortList) GetList() []int {
 	return isl.list
 }
 
@@ -98,5 +107,26 @@ func (isl *IntSortList) DeleteFromIndex(index int) (err error) {
 
 	isl.list[index-1] = 0
 	isl.length--
+	return
+}
+
+// 交换两个元素的位置
+func (isl *IntSortList) Swap(i, j int) {
+	isl.list[i], isl.list[j] = isl.list[j], isl.list[i]
+}
+
+func (isl *IntSortList) BubbleSort() (count int) {
+	flag := true
+	for i := 0; i < isl.length && flag; i++ {
+		flag = false
+		for j := isl.length - 2; j >= i; j-- {
+			if isl.list[j+1] < isl.list[j] {
+				isl.Swap(j, j+1)
+				flag = true
+			}
+			count++
+		}
+	}
+
 	return
 }
